@@ -27,7 +27,7 @@ public class RepertTamagotchiV2 {
 			String choixNom = saisir.nextLine();
 			nouveauTama.setNomTama(choixNom);
 			
-			System.out.println("Veuillez saisir le sexe de votre Tamagotchi: ");
+			System.out.println("Veuillez saisir le sexe de votre Tamagotchi: (M/F) ");
 			String choixSexe = saisir.nextLine();
 			nouveauTama.setSexe(choixSexe);
 			
@@ -35,7 +35,7 @@ public class RepertTamagotchiV2 {
 			String choixCouleur = saisir.nextLine();
 			nouveauTama.setCouleur(choixCouleur);
 			
-			System.out.println("Veuillez donner une taille a votre Tamagotchi: ");
+			System.out.println("Veuillez donner une taille a votre Tamagotchi: (chiffre) ");
 			double choixTaille = saisir.nextDouble();
 			nouveauTama.setTaille(choixTaille);
 			saisir.nextLine();
@@ -60,12 +60,13 @@ public class RepertTamagotchiV2 {
 
 			boolean vie = false;
 			
-			do {
+			do {	
+					vie = true;
 					System.out.println("Voulez-vous faire un peu d'activités ? (oui / non)");
 					String reponse = saisir.nextLine();
 				
 					if (reponse.equals("oui")) {
-						vie = true;	
+					//	vie = true;	
 					System.out.println("On va faire des activites qui sont : dormir ou jouer ou manger ou fumer ou sport");
 					System.out.println("Veuillez choisir entre une de ces 5 propositions");
 					
@@ -121,16 +122,16 @@ public class RepertTamagotchiV2 {
 						
 					} 
 					else if (reponse.equals("non")) {
-						vie = !vie;
+	//					vie = false;
 						break;
 					}
 					else {
-						vie = !vie;
+						
 						System.out.println("Votre reponse n'est pas valide, on recommence");
-
+						vie = false;
 					}
 				
-			} while (!vie || tamagotchiV2.getEnergie() > 0 || tamagotchiV2.getPoids() <= 15);
+			} while (!vie || tamagotchiV2.getEnergie() > 0 || tamagotchiV2.getPoids() <= 15 || tamagotchiV2.getEtatSante() > 0);
 			
 			System.out.println("Merci et à bientot !");
 		}
@@ -167,8 +168,7 @@ public class RepertTamagotchiV2 {
 		
 		//Methode Manger
 		public static void choixManger(TamagotchiV2 tamagotchiV2) {
-			poids = tamagotchiV2.getPoids() + 5;
-			tamagotchiV2.setPoids(poids);
+			calculPoids(tamagotchiV2);
 			System.out.println("Le tamagotchi " +tamagotchiV2.getNomTama()+ " a pris du poids. Il pese desormais " +tamagotchiV2.getPoids()+ ".");
 			
 			String rep = "";
@@ -181,8 +181,7 @@ public class RepertTamagotchiV2 {
 					System.out.println("Veuillez taper : manger");
 					saisir.nextLine();
 					
-					poids = tamagotchiV2.getPoids() + 5;
-					tamagotchiV2.setPoids(poids);
+					calculPoids(tamagotchiV2);
 					System.out.println("Le tamagotchi " +tamagotchiV2.getNomTama()+ " a repris du poids. Il pese " +tamagotchiV2.getPoids()+ ".");				
 				} 
 
@@ -321,6 +320,18 @@ public class RepertTamagotchiV2 {
 		public static void calculSanteGagnee(TamagotchiV2 tamagotchiV2) {
 			etatSante = tamagotchiV2.getEtatSante() +10;
 			tamagotchiV2.setEtatSante(etatSante);
+		}
+		
+		//Augmentation du poids en mangeant
+		public static void calculPoids(TamagotchiV2 tamagotchiV2) {
+			poids = tamagotchiV2.getPoids() + 5;
+			tamagotchiV2.setPoids(poids);
+		}
+				
+				//Perte du poids en faisant du sport
+		public static void calculPertePoids(TamagotchiV2 tamagotchiV2) {
+			poids = tamagotchiV2.getPoids() -5;
+			tamagotchiV2.setPoids(poids);
 		}
 		
 
